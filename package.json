@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Hapi plugin for registering routes",
   "main": "index.js",
-  "private": true,
+  "private": false,
   "scripts": {
     "test": "make test"
   },

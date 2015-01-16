@@ -1,61 +1,76 @@
-//'use strict';
-//
-//var Lab = require('lab');
-//var Code = require('code');
-//var Hapi = require('hapi');
-//
-//var lab = exports.lab = Lab.script();
-//var it = lab.it;
-//var expect = Code.expect;
-//
-//var dbOptions = {
-//	host: 'localhost',
-//	user: 'root',
-//	password: '',
-//	database: 'test'
-//};
-//
-//lab.experiment('Integration', function () {
-//	it ('Makes a db connection that works', function (done) {
-//		var server = new Hapi.Server();
-//		server.connection();
-//		
-//		server.register({
-//			register: require('../'),
-//			options: dbOptions
-//		}, function (err) {
-//			expect(err).to.not.exist();
-//			
-//			server.route({
-//				method: 'GET',
-//				path: '/test',
-//				config: {
-//					handler: function (request, reply) {
-//						var sql = 'INSERT INTO test SET id = 1';
-//
-//						expect(request.db, 'db connection').to.exist();
-//
-//						request.db.query(sql, function (err, results) {
-//							expect(err, 'error').to.not.exist();
-//							expect(results.insertId, 'insert Id').to.exist();
-//
-//							return reply({id: results.insertId});
-//						});
-//					}
-//				}
-//			});
-//
-//			server.inject({
-//				method: 'GET',
-//				url: '/test'
-//			}, function (response) {
-//				expect(response.statusCode, 'status code').to.equal(200);
-//				expect(response.result, 'result').to.deep.equal({
-//					id: 1
-//				});
-//
-//				done();
-//			});
-//		});
-//	});
-//});
+'use strict';
+
+var Lab = require('lab');
+var Code = require('code');
+var Hapi = require('hapi');
+
+var lab = exports.lab = Lab.script();
+var it = lab.it;
+var expect = Code.expect;
+
+
+
+lab.experiment('With right settings', function () {
+	var server = new Hapi.Server();
+
+	lab.before(function (done) {
+		server.connection();
+
+		server.register({
+			register: require('../'),
+			options: {dir: 'test/routes'}
+		}, function (err) {
+			expect(err).to.not.exist();
+
+			done();
+		});
+	});
+
+	it('Adds all the routes in the routes folder to the server', function (done) {
+		server.inject({
+			method: 'GET',
+			url: '/1'
+		}, function (response) {
+			expect(response.statusCode, 'status code').to.equal(200);
+			expect(response.result, 'result').to.equal('Hello 1');
+
+			server.inject({
+				method: 'GET',
+				url: '/2'
+			}, function (response) {
+				expect(response.statusCode, 'status code').to.equal(200);
+				expect(response.result, 'result').to.equal('Hello 2');
+
+				done();
+			});
+		});
+	});
+
+	it('Returns a 404 on invalid route', function (done) {
+		server.inject({
+			method: 'GET',
+			url: '/404'
+		}, function (response) {
+			expect(response.statusCode, 'status code').to.equal(404);
+
+			done();
+		});
+	});
+});
+
+lab.experiment('With wrong settings', function () {
+	var server = new Hapi.Server();
+
+	it('Returns an error on invalid dir option', function (done) {
+		server.connection();
+
+		server.register({
+			register: require('../'),
+			options: {dir: 'test/invalid'}
+		}, function (err) {
+			expect(err).to.exist();
+
+			done();
+		});
+	});
+});

@@ -1,0 +1,40 @@
+{
+  "name": "hapi-routes",
+  "version": "0.0.1",
+  "description": "Hapi plugin for registering routes",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Salesflare/hapi-routes.git"
+  },
+  "keywords": [
+    "hapi",
+    "route",
+    "routes",
+    "plugin"
+  ],
+  "author": "Adri Van Houdt <adri.van.houdt@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Salesflare/hapi-routes/issues"
+  },
+  "homepage": "https://github.com/Salesflare/hapi-routes",
+  "peerDependencies": {
+    "hapi": ">=8.x.x"
+  },
+  "engines": {
+    "node": ">=0.10.35"
+  },
+  "devDependencies": {
+    "code": "1.x.x",
+    "hapi": "8.x.x",
+    "lab": "5.x.x"
+  },
+  "dependencies": {
+    "async": "0.9.x"
+  }
+}

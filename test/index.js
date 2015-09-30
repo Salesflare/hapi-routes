@@ -20,7 +20,7 @@ lab.experiment('With right settings', function () {
 
         server.register({
             register: require('../'),
-            options: {dir: 'test/routes'}
+            options: { dir: 'test/routes' }
         }, function (err) {
 
             expect(err).to.not.exist();
@@ -34,10 +34,10 @@ lab.experiment('With right settings', function () {
         server.inject({
             method: 'GET',
             url: '/1'
-        }, function (response) {
+        }, function (response1) {
 
-            expect(response.statusCode, 'status code').to.equal(200);
-            expect(response.result, 'result').to.equal('Hello 1');
+            expect(response1.statusCode, 'status code').to.equal(200);
+            expect(response1.result, 'result').to.equal('Hello 1');
 
             server.inject({
                 method: 'GET',
@@ -76,7 +76,7 @@ lab.experiment('With wrong settings', function () {
 
         server.register({
             register: require('../'),
-            options: {dir: 'test/invalid'}
+            options: { dir: 'test/invalid' }
         }, function (err) {
 
             expect(err).to.exist();

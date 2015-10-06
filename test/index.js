@@ -12,76 +12,80 @@ var expect = Code.expect;
 
 lab.experiment('With right settings', function () {
 
-    var server = new Hapi.Server();
+    it('Sets up with right config', function (done) {
 
-    lab.before(function (done) {
-
+        var server = new Hapi.Server();
         server.connection();
 
-        server.register({
+        return server.register({
             register: require('../'),
             options: { dir: 'test/routes' }
         }, function (err) {
 
             expect(err).to.not.exist();
 
-            done();
+            return done();
         });
     });
 
     it('Adds all the routes in the routes folder to the server', function (done) {
 
-        server.inject({
-            method: 'GET',
-            url: '/1'
-        }, function (response1) {
+        var server = new Hapi.Server();
+        server.connection();
 
-            expect(response1.statusCode, 'status code').to.equal(200);
-            expect(response1.result, 'result').to.equal('Hello 1');
+        return server.register({
+            register: require('../'),
+            options: { dir: 'test/routes' }
+        }, function (err) {
 
-            server.inject({
-                method: 'GET',
-                url: '/2'
-            }, function (response) {
+            expect(err).to.not.exist();
+            expect(server.table()[0].table.length).to.equal(2);
 
-                expect(response.statusCode, 'status code').to.equal(200);
-                expect(response.result, 'result').to.equal('Hello 2');
-
-                done();
-            });
+            return done();
         });
     });
 
     it('Returns a 404 on invalid route', function (done) {
 
-        server.inject({
-            method: 'GET',
-            url: '/404'
-        }, function (response) {
+        var server = new Hapi.Server();
+        server.connection();
 
-            expect(response.statusCode, 'status code').to.equal(404);
+        return server.register({
+            register: require('../'),
+            options: { dir: 'test/routes' }
+        }, function (err) {
 
-            done();
+            expect(err).to.not.exist();
+
+            return server.inject({
+                method: 'GET',
+                url: '/404'
+            }, function (response) {
+
+                expect(response.statusCode, 'status code').to.equal(404);
+
+                return done();
+            });
         });
     });
 });
 
 lab.experiment('With wrong settings', function () {
 
-    var server = new Hapi.Server();
-
     it('Returns an error on invalid dir option', function (done) {
 
+        var server = new Hapi.Server();
         server.connection();
 
-        server.register({
+        return server.register({
             register: require('../'),
             options: { dir: 'test/invalid' }
         }, function (err) {
 
             expect(err).to.exist();
+            expect(err.message).to.equal('ENOENT, readdir \'test/invalid\'');
 
-            done();
+            return done();
         });
     });
 });

@@ -2,7 +2,7 @@
   "name": "hapi-routes",
   "version": "1.0.3",
   "description": "Hapi plugin for registering routes",
-  "main": "index.js",
+  "main": "lib/index.js",
   "private": false,
   "scripts": {
     "test": "lab -a code -vL -t 100"
@@ -24,10 +24,10 @@
   },
   "homepage": "https://github.com/Salesflare/hapi-routes",
   "peerDependencies": {
-    "hapi": ">=8.x.x"
+    "hapi": ">=10.x.x"
   },
   "engines": {
-    "node": ">=0.10.35"
+    "node": ">=0.10.40"
   },
   "devDependencies": {
     "code": "1.5.0",

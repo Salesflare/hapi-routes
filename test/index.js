@@ -83,7 +83,7 @@ lab.experiment('With wrong settings', function () {
         }, function (err) {
 
             expect(err).to.exist();
-            expect(err.message).to.equal('ENOENT, readdir \'test/invalid\'');
+            expect(err.message).to.include('ENOENT');
 
             return done();
         });

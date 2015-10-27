@@ -30,9 +30,9 @@
     "node": ">=4.0.0"
   },
   "devDependencies": {
-    "code": "1.5.0",
+    "code": "1.5.x",
     "hapi": "11.0.x",
-    "lab": "6.2.0"
+    "lab": "7.x.x"
   },
   "dependencies": {
     "async": "1.5.0"

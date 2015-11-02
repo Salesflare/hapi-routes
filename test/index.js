@@ -1,26 +1,26 @@
 'use strict';
 
-var Lab = require('lab');
-var Code = require('code');
-var Hapi = require('hapi');
+const Lab = require('lab');
+const Code = require('code');
+const Hapi = require('hapi');
 
-var lab = exports.lab = Lab.script();
-var it = lab.it;
-var expect = Code.expect;
+const lab = exports.lab = Lab.script();
+const it = lab.it;
+const expect = Code.expect;
 
 
 
-lab.experiment('With right settings', function () {
+lab.experiment('With right settings', () => {
 
-    it('Sets up with right config', function (done) {
+    it('Sets up with right config', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
 
         return server.register({
             register: require('../'),
             options: { dir: 'test/routes' }
-        }, function (err) {
+        }, (err) => {
 
             expect(err).to.not.exist();
 
@@ -28,15 +28,15 @@ lab.experiment('With right settings', function () {
         });
     });
 
-    it('Adds all the routes in the routes folder to the server', function (done) {
+    it('Adds all the routes in the routes folder to the server', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
 
         return server.register({
             register: require('../'),
             options: { dir: 'test/routes' }
-        }, function (err) {
+        }, (err) => {
 
             expect(err).to.not.exist();
             expect(server.table()[0].table.length).to.equal(2);
@@ -45,22 +45,22 @@ lab.experiment('With right settings', function () {
         });
     });
 
-    it('Returns a 404 on invalid route', function (done) {
+    it('Returns a 404 on invalid route', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
 
         return server.register({
             register: require('../'),
             options: { dir: 'test/routes' }
-        }, function (err) {
+        }, (err) => {
 
             expect(err).to.not.exist();
 
             return server.inject({
                 method: 'GET',
                 url: '/404'
-            }, function (response) {
+            }, (response) => {
 
                 expect(response.statusCode, 'status code').to.equal(404);
 
@@ -70,17 +70,17 @@ lab.experiment('With right settings', function () {
     });
 });
 
-lab.experiment('With wrong settings', function () {
+lab.experiment('With wrong settings', () => {
 
-    it('Returns an error on invalid dir option', function (done) {
+    it('Returns an error on invalid dir option', (done) => {
 
-        var server = new Hapi.Server();
+        const server = new Hapi.Server();
         server.connection();
 
         return server.register({
             register: require('../'),
             options: { dir: 'test/invalid' }
-        }, function (err) {
+        }, (err) => {
 
             expect(err).to.exist();
             expect(err.message).to.include('ENOENT');

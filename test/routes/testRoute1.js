@@ -1,6 +1,6 @@
 'use strict';
 
-var routes = [
+const routes = [
     {
         method: '*',
         path: '/1',
@@ -11,9 +11,9 @@ var routes = [
     }
 ];
 
-var labels = [];
+const labels = [];
 
 exports.routes = function (server) {
 
-    server.select(labels).route(routes);
+    return server.select(labels).route(routes);
 };

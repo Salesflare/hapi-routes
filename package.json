@@ -1,6 +1,6 @@
 {
   "name": "hapi-routes",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Hapi plugin for registering routes",
   "main": "lib/index.js",
   "private": false,

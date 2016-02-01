@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/Salesflare/hapi-routes",
   "peerDependencies": {
-    "hapi": ">=11.x.x"
+    "hapi": ">=13.0.0"
   },
   "engines": {
     "node": ">=4.0.0"

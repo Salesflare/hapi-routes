@@ -35,6 +35,6 @@
     "lab": "10.x.x"
   },
   "dependencies": {
-    "async": "1.x.x"
+    "async": "1.5.1"
   }
 }

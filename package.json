@@ -24,15 +24,15 @@
   },
   "homepage": "https://github.com/Salesflare/hapi-routes",
   "peerDependencies": {
-    "hapi": ">=11.x.x"
+    "hapi": ">=13.x.x"
   },
   "engines": {
     "node": ">=4.0.0"
   },
   "devDependencies": {
     "code": "2.x.x",
-    "hapi": "11.x.x",
-    "lab": "7.x.x"
+    "hapi": "13.x.x",
+    "lab": "10.x.x"
   },
   "dependencies": {
     "async": "1.x.x"

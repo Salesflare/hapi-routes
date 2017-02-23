@@ -3,6 +3,7 @@
 const Lab = require('lab');
 const Code = require('code');
 const Hapi = require('hapi');
+const Path = require('path');
 
 const lab = exports.lab = Lab.script();
 const it = lab.it;
@@ -19,7 +20,7 @@ lab.experiment('With right settings', () => {
 
         return server.register({
             register: require('../'),
-            options: { dir: 'test/routes' }
+            options: { dir: Path.join(__dirname, 'routes') }
         }, (err) => {
 
             expect(err).to.not.exist();
@@ -35,11 +36,31 @@ lab.experiment('With right settings', () => {
 
         return server.register({
             register: require('../'),
-            options: { dir: 'test/routes' }
+            options: { dir: Path.join(__dirname, 'routes') }
         }, (err) => {
 
             expect(err).to.not.exist();
             expect(server.table()[0].table.length).to.equal(2);
+
+            return done();
+        });
+    });
+
+    it('Does not add anything when RegExp matches no files', (done) => {
+
+        const server = new Hapi.Server();
+        server.connection();
+
+        return server.register({
+            register: require('../'),
+            options: {
+                dir: Path.join(__dirname, 'routes'),
+                test: /hello world/
+            }
+        }, (err) => {
+
+            expect(err).to.not.exist();
+            expect(server.table()[0].table.length).to.equal(0);
 
             return done();
         });
@@ -52,7 +73,7 @@ lab.experiment('With right settings', () => {
 
         return server.register({
             register: require('../'),
-            options: { dir: 'test/routes' }
+            options: { dir: Path.join(__dirname, 'routes') }
         }, (err) => {
 
             expect(err).to.not.exist();
@@ -79,7 +100,7 @@ lab.experiment('With wrong settings', () => {
 
         return server.register({
             register: require('../'),
-            options: { dir: 'test/invalid' }
+            options: { dir: Path.join(__dirname, 'invalid') }
         }, (err) => {
 
             expect(err).to.exist();

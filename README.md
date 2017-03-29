@@ -1,8 +1,8 @@
 # Hapi Routes [![Build Status](https://travis-ci.org/Salesflare/hapi-routes.svg)](https://travis-ci.org/Salesflare/hapi-routes)
-Hapi plugin for registering routes
+hapi plugin for registering routes
 
 ## What
-Hapi Routes alows you to put all your routing logic in different files in a specified folder.
+Hapi Routes allows you to put all your routing logic in different files in a specified folder.
 This allows you to have a clear overview of your routes.
 
 ## How
@@ -26,7 +26,7 @@ server.register({
 ```
 {
   dir: String,    // (Required): relative path where to search for route files.
-  test: ReqExp,   // (Optional): regular expression for matching files, defaults to /\.(js)$/
+  test: RegExp,   // (Optional): regular expression for matching files, defaults to /\.(js)$/
 }
 ```
 In the example the routes are located in `test/routes` relative to the `server.js` module.

@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/Salesflare/hapi-routes",
   "peerDependencies": {
-    "hapi": ">=8.x.x"
+    "hapi": ">=16.1.1"
   },
   "engines": {
     "node": ">=4.0.0"
@@ -32,7 +32,7 @@
   "devDependencies": {
     "code": "4.x.x",
     "hapi": "16.x.x",
-    "lab": "13.x.x"
+    "lab": "14.x.x"
   },
   "dependencies": {
     "async": "2.x.x"

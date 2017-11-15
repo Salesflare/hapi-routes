@@ -8,17 +8,13 @@ This allows you to have a clear overview of your routes.
 ## How
 ### server.js
 ```javascript
-const server = new Hapi.Server();
+const server = new Hapi.server();
 
-server.connection();
-
-server.register({
-  register: require('hapi-routes'),
+await server.register({
+  plugin: require('hapi-routes'),
   options: {
     dir: `${__dirname}/test/routes`,
   },
-}, (err) => {
-  // plugin registration callback
 });
 ```
 

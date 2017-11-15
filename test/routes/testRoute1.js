@@ -11,9 +11,7 @@ const routes = [
     }
 ];
 
-const labels = [];
-
 exports.routes = function (server) {
 
-    return server.select(labels).route(routes);
+    return server.route(routes);
 };

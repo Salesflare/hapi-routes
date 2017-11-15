@@ -1,13 +1,12 @@
 'use strict';
 
 const Lab = require('lab');
-const Code = require('code');
 const Hapi = require('hapi');
 const Path = require('path');
 
 const lab = exports.lab = Lab.script();
-const it = lab.it;
-const expect = Code.expect;
+const { it } = lab;
+const { expect, fail } = Lab.assertions;
 
 const testRoutePath = Path.join(__dirname, 'routes');
 
@@ -71,20 +70,22 @@ lab.experiment('With right settings', () => {
 
 lab.experiment('With wrong settings', () => {
 
-    it('Returns an error on invalid dir option', (done) => {
+    it('Returns an error on invalid dir option', async () => {
 
         const server = new Hapi.server();
 
-        server.register({
-            plugin: require('../'),
-            options: { dir: Path.join(__dirname, 'invalid') }
-        }).then(() => {
-
-            done(new Error('Should have thrown an error'));
-        }).catch((err) => {
-
+        try {
+            await server.register({
+                plugin: require('../'),
+                options: { dir: Path.join(__dirname, 'invalid') }
+            });
+        }
+        catch (err) {
             expect(err).to.exist();
             expect(err.message).to.include('ENOENT');
-        });
+            return;
+        }
+
+        fail('Should have thrown an error');
     });
 });

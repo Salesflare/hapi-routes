@@ -33,8 +33,5 @@
     "code": "5.x.x",
     "hapi": "17.x.x",
     "lab": "15.x.x"
-  },
-  "dependencies": {
-    "bluebird": "3.x.x"
   }
 }

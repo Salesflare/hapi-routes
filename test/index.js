@@ -1,112 +1,91 @@
 'use strict';
 
 const Lab = require('lab');
-const Code = require('code');
 const Hapi = require('hapi');
 const Path = require('path');
 
 const lab = exports.lab = Lab.script();
-const it = lab.it;
-const expect = Code.expect;
+const { it } = lab;
+const { expect, fail } = Lab.assertions;
 
+const testRoutePath = Path.join(__dirname, 'routes');
 
 
 lab.experiment('With right settings', () => {
 
-    it('Sets up with right config', (done) => {
+    it('Sets up with right config', () => {
 
-        const server = new Hapi.Server();
-        server.connection();
+        const server = new Hapi.server();
 
-        return server.register({
-            register: require('../'),
-            options: { dir: Path.join(__dirname, 'routes') }
-        }, (err) => {
+        expect(async () => {
 
-            expect(err).to.not.exist();
-
-            return done();
-        });
-    });
-
-    it('Adds all the routes in the routes folder to the server', (done) => {
-
-        const server = new Hapi.Server();
-        server.connection();
-
-        return server.register({
-            register: require('../'),
-            options: { dir: Path.join(__dirname, 'routes') }
-        }, (err) => {
-
-            expect(err).to.not.exist();
-            expect(server.table()[0].table.length).to.equal(2);
-
-            return done();
-        });
-    });
-
-    it('Does not add anything when RegExp matches no files', (done) => {
-
-        const server = new Hapi.Server();
-        server.connection();
-
-        return server.register({
-            register: require('../'),
-            options: {
-                dir: Path.join(__dirname, 'routes'),
-                test: /hello world/
-            }
-        }, (err) => {
-
-            expect(err).to.not.exist();
-            expect(server.table()[0].table.length).to.equal(0);
-
-            return done();
-        });
-    });
-
-    it('Returns a 404 on invalid route', (done) => {
-
-        const server = new Hapi.Server();
-        server.connection();
-
-        return server.register({
-            register: require('../'),
-            options: { dir: Path.join(__dirname, 'routes') }
-        }, (err) => {
-
-            expect(err).to.not.exist();
-
-            return server.inject({
-                method: 'GET',
-                url: '/404'
-            }, (response) => {
-
-                expect(response.statusCode, 'status code').to.equal(404);
-
-                return done();
+            await server.register({
+                plugin: require('../'),
+                options: { dir: testRoutePath }
             });
+        }).to.not.throw();
+    });
+
+    it('Adds all the routes in the routes folder to the server', async () => {
+
+        const server = new Hapi.server();
+
+        await server.register({
+            plugin: require('../'),
+            options: { dir: testRoutePath }
         });
+
+        expect(server.table().length).to.equal(2);
+    });
+
+    it('Does not add anything when RegExp matches no files', async () => {
+
+        const server = new Hapi.server();
+
+        await server.register({
+            plugin: require('../'),
+            options: { dir: testRoutePath, test: /hello world/ }
+        });
+
+        expect(server.table().length).to.equal(0);
+    });
+
+    it('Returns a 404 on invalid route', async () => {
+
+        const server = new Hapi.server();
+
+        await server.register({
+            plugin: require('../'),
+            options: { dir: testRoutePath }
+        });
+
+        const response = await server.inject({
+            method: 'GET',
+            url: '/404'
+        });
+
+        expect(response.statusCode, 'status code').to.equal(404);
     });
 });
 
 lab.experiment('With wrong settings', () => {
 
-    it('Returns an error on invalid dir option', (done) => {
+    it('Returns an error on invalid dir option', async () => {
 
-        const server = new Hapi.Server();
-        server.connection();
+        const server = new Hapi.server();
 
-        return server.register({
-            register: require('../'),
-            options: { dir: Path.join(__dirname, 'invalid') }
-        }, (err) => {
-
+        try {
+            await server.register({
+                plugin: require('../'),
+                options: { dir: Path.join(__dirname, 'invalid') }
+            });
+        }
+        catch (err) {
             expect(err).to.exist();
             expect(err.message).to.include('ENOENT');
+            return;
+        }
 
-            return done();
-        });
+        fail('Should have thrown an error');
     });
 });

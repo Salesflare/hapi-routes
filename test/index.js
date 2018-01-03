@@ -38,6 +38,18 @@ lab.experiment('With right settings', () => {
         expect(server.table().length).to.equal(2);
     });
 
+    it('Adds all the routes in the globbed routes folder to the server (options: glob)', async () => {
+
+        const server = new Hapi.server();
+
+        await server.register({
+            plugin: require('../'),
+            options: { dir: `${testRoutePath}/**/*.js`, glob: true }
+        });
+
+        expect(server.table().length).to.equal(4);
+    });
+
     it('Does not add anything when RegExp matches no files', async () => {
 
         const server = new Hapi.server();

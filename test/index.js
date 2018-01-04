@@ -44,7 +44,7 @@ lab.experiment('With right settings', () => {
 
         await server.register({
             plugin: require('../'),
-            options: { dir: `${testRoutePath}/**/*.js`, glob: true }
+            options: { dir: `${testRoutePath}/**/*`, glob: true }
         });
 
         expect(server.table().length).to.equal(4);

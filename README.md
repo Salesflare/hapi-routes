@@ -13,7 +13,7 @@ const server = new Hapi.server();
 await server.register({
   plugin: require('hapi-routes'),
   options: {
-    dir: `${__dirname}/test/routes`,
+    dir: `${__dirname}/test/routes/*`,
   },
 });
 ```
@@ -21,11 +21,9 @@ await server.register({
 `options` take the following arguments:
 ```
 {
-  dir: String,    // (Required): relative path where to search for route files.
-  test: RegExp,   // (Optional): regular expression for matching files, defaults to /\.(js)$/
-  glob: Boolean   // (Optional): When 'true' this will glob all files in the provided
-                                 directory. Requires a globable path: 'routes/*',
-                                 'routes/**/*.js', etc
+  dir: String,  // (Required): Relative path where to search for route files.
+                               Requires a globable path: 'routes/*', 'routes/**/*.js', etc
+  test: RegExp, // (Optional): Regular expression for matching files, defaults to /\.(js)$/
 }
 ```
 In the example the routes are located in `test/routes` relative to the `server.js` module.

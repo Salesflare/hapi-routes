@@ -8,8 +8,8 @@ const lab = exports.lab = Lab.script();
 const { it } = lab;
 const { expect, fail } = Lab.assertions;
 
-const testRoutePath = Path.join(__dirname, 'routes');
-
+const testRoutePath = Path.join(__dirname, 'routes/*');
+const testRouteNestedPath = Path.join(__dirname, 'routes/**/*');
 
 lab.experiment('With right settings', () => {
 
@@ -44,7 +44,7 @@ lab.experiment('With right settings', () => {
 
         await server.register({
             plugin: require('../'),
-            options: { dir: `${testRoutePath}/**/*`, glob: true }
+            options: { dir: testRouteNestedPath, glob: true }
         });
 
         expect(server.table().length).to.equal(4);
@@ -94,7 +94,7 @@ lab.experiment('With wrong settings', () => {
         }
         catch (err) {
             expect(err).to.exist();
-            expect(err.message).to.include('ENOENT');
+            expect(err.message).to.include('is not a valid glob path');
             return;
         }
 

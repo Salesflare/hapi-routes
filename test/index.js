@@ -94,7 +94,7 @@ lab.experiment('With wrong settings', () => {
         }
         catch (err) {
             expect(err).to.exist();
-            expect(err.message).to.include('is not a valid glob path');
+            expect(err.message).to.include('is not a valid path');
             return;
         }
 

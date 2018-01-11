@@ -8,8 +8,8 @@ const lab = exports.lab = Lab.script();
 const { it } = lab;
 const { expect, fail } = Lab.assertions;
 
-const testRoutePath = Path.join(__dirname, 'routes');
-
+const testRoutePath = Path.join(__dirname, 'routes/*');
+const testRouteNestedPath = Path.join(__dirname, 'routes/**/*');
 
 lab.experiment('With right settings', () => {
 
@@ -36,6 +36,18 @@ lab.experiment('With right settings', () => {
         });
 
         expect(server.table().length).to.equal(2);
+    });
+
+    it('Adds all the routes in the globbed routes folder to the server (options: glob)', async () => {
+
+        const server = new Hapi.server();
+
+        await server.register({
+            plugin: require('../'),
+            options: { dir: testRouteNestedPath, glob: true }
+        });
+
+        expect(server.table().length).to.equal(4);
     });
 
     it('Does not add anything when RegExp matches no files', async () => {
@@ -82,7 +94,7 @@ lab.experiment('With wrong settings', () => {
         }
         catch (err) {
             expect(err).to.exist();
-            expect(err.message).to.include('ENOENT');
+            expect(err.message).to.include('is not a valid path');
             return;
         }
 

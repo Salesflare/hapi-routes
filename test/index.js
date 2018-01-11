@@ -21,7 +21,9 @@ lab.experiment('With right settings', () => {
 
             await server.register({
                 plugin: require('../'),
-                options: { dir: testRoutePath }
+                options: {
+                    dir: testRoutePath
+                }
             });
         }).to.not.throw();
     });
@@ -32,7 +34,9 @@ lab.experiment('With right settings', () => {
 
         await server.register({
             plugin: require('../'),
-            options: { dir: testRoutePath }
+            options: {
+                dir: testRoutePath
+            }
         });
 
         expect(server.table().length).to.equal(2);
@@ -44,7 +48,9 @@ lab.experiment('With right settings', () => {
 
         await server.register({
             plugin: require('../'),
-            options: { dir: testRouteNestedPath, glob: true }
+            options: {
+                dir: testRouteNestedPath
+            }
         });
 
         expect(server.table().length).to.equal(4);
@@ -56,7 +62,10 @@ lab.experiment('With right settings', () => {
 
         await server.register({
             plugin: require('../'),
-            options: { dir: testRoutePath, test: /hello world/ }
+            options: {
+                dir: testRoutePath,
+                test: /hello world/
+            }
         });
 
         expect(server.table().length).to.equal(0);
@@ -68,7 +77,9 @@ lab.experiment('With right settings', () => {
 
         await server.register({
             plugin: require('../'),
-            options: { dir: testRoutePath }
+            options: {
+                dir: testRoutePath
+            }
         });
 
         const response = await server.inject({
@@ -89,12 +100,14 @@ lab.experiment('With wrong settings', () => {
         try {
             await server.register({
                 plugin: require('../'),
-                options: { dir: Path.join(__dirname, 'invalid') }
+                options: {
+                    dir: Path.join(__dirname, 'invalid')
+                }
             });
         }
         catch (err) {
             expect(err).to.exist();
-            expect(err.message).to.include('is not a valid path');
+            expect(err.message).to.include(Path.join(__dirname, 'invalid'));
             return;
         }
 

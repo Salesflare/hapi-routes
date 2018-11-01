@@ -30,7 +30,7 @@
     "node": ">=8.9.x"
   },
   "devDependencies": {
-    "code": "5.x.x",
+    "code": "^5.2.2",
     "hapi": "17.x.x",
     "lab": "15.x.x"
   },

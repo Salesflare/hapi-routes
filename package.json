@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "private": false,
   "scripts": {
-    "test": "lab -a code -vL -t 100"
+    "test": "lab -a @hapi/code -vL -t 100"
   },
   "repository": {
     "type": "git",
@@ -24,17 +24,17 @@
   },
   "homepage": "https://github.com/Salesflare/hapi-routes",
   "peerDependencies": {
-    "hapi": ">=17.x.x"
+    "@hapi/hapi": ">=18.4.0"
   },
   "engines": {
-    "node": ">=8.9.x"
+    "node": ">=12.14.x"
   },
   "devDependencies": {
-    "code": "^5.2.4",
-    "hapi": "^18.1.0",
-    "lab": "^18.0.2"
+    "@hapi/code": "^7.0.0",
+    "@hapi/hapi": "^18.4.0",
+    "@hapi/lab": "^22.0.2"
   },
   "dependencies": {
-    "glob": "^7.1.3"
+    "glob": "^7.1.6"
   }
 }

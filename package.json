@@ -32,7 +32,7 @@
   "devDependencies": {
     "@hapi/code": "^8.0.1",
     "@hapi/hapi": "^19.1.1",
-    "@hapi/lab": "^22.0.4"
+    "@hapi/lab": "^24.3.2"
   },
   "dependencies": {
     "glob": "^7.1.6"
